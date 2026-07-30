@@ -1,0 +1,29 @@
+<main>
+  <mat-drawer-container>
+    <mat-drawer class="menuScreen" mode="side" opened>
+      <div>
+        <div class="example-button-row">
+        <div class="example-flex-container">
+          <button matButton extended (click)="setMenuView()">
+            <mat-icon>menu</mat-icon>
+            Menu
+          </button>
+          <button matButton (click)="setRecipesView()">
+            <mat-icon>book</mat-icon>
+            Recipes
+          </button>          
+        </div>
+      </div>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content>
+      @if(isMenu()) {
+        <menu></menu>
+      } @else if (isRecipe()) {
+        <recipes></recipes>
+      }      
+    </mat-drawer-content>
+  </mat-drawer-container>
+</main>
+
+<router-outlet />

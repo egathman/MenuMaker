@@ -1,0 +1,38 @@
+.menu-style {
+    height: 100vh;
+}
+
+.horizontal-div{
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.menu-items{
+    overflow-y: auto;    
+    height: 600px;
+}
+
+.menu-item{
+    padding: 5px;
+}
+
+.spaced-list-item {
+  margin-bottom: 20px;
+  height: fit-content;
+}
+
+.vertical-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.WeekText{
+    display: contents;
+    justify-content: center;    
+}
+
+.week-nav-style{
+    color: #000;
+}

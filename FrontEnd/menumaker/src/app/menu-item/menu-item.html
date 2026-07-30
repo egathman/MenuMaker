@@ -1,0 +1,27 @@
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    @if(EditMode()) {
+      <mat-card-title>{{getRecipeName()}}</mat-card-title>
+    } @else {
+      <mat-card-title>{{this.Day()}}: {{getRecipeName()}}</mat-card-title>
+    }
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <mat-chip-set aria-label="Fish selection">
+        @for (ingrediant of getIngrediants(); track $index) {
+          <mat-chip>{{ingrediant}}</mat-chip>
+        }
+      </mat-chip-set>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    @if(EditMode()) {
+      <button matButton (click)="openRecipeEditor()">EDIT</button>
+      <button matButton>DELETE</button>
+    } @else {
+      <button matButton>SWAP DAYS</button>
+      <button matButton>PICK NEW</button>
+    }    
+  </mat-card-actions>
+</mat-card>

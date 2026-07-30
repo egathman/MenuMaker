@@ -1,0 +1,14 @@
+.menu {
+    color: #6495ed;
+}
+
+.menuScreen {
+    background-color: #6495ed;
+    width: 150px;
+    height: 100vh;
+    border-radius: 0;
+}
+
+.recipe {
+    color: #b0c4de;
+}

@@ -1,0 +1,19 @@
+<div class="recipe-style">
+    <div class="full-width">
+        <p class="header-style">
+            Current Recipes
+        </p>
+    </div>
+    <div class="horizontal-div">
+        <div class="menu-items">
+            @for (recipe of availableRecipes(); track $index) {
+                <menu-item class="menu-item" [EditMode]="true" [Recipe]="recipe"></menu-item>
+            } @empty {
+                <p>Loading recipes...</p>
+            }
+        </div>
+    </div>
+    <div class="horizontal-div">
+        <button matButton="elevated">NEW RECIPE</button>
+    </div>
+</div>
