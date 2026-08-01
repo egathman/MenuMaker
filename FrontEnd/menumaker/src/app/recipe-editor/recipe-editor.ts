@@ -20,7 +20,9 @@ import { DataFetcher, CookBookRecipe, Recipe } from '../services/data-fetcher/da
 })
 export class RecipeEditor implements OnInit {
   readonly dialogRef = inject(MatDialogRef<RecipeEditor>);
-  data = inject<{ recipe: CookBookRecipe }>(MAT_DIALOG_DATA);
+  data = inject<{ 
+    recipe: CookBookRecipe
+    newRecipe: boolean }>(MAT_DIALOG_DATA);
   private fb = inject(NonNullableFormBuilder);
 
   isEditingName = false;

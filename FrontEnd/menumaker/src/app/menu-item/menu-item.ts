@@ -36,7 +36,10 @@ export class MenuItem {
 
     public openRecipeEditor() {
       const dialogRef = this.dialog.open(RecipeEditor, {
-        data: {recipe: this.Recipe()},
+        data: {
+          recipe: this.Recipe(),
+          newRecipe: false
+        },
       });
 
       dialogRef.afterClosed().subscribe(result => {
