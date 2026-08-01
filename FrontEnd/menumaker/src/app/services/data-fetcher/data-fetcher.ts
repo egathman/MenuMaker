@@ -1,7 +1,7 @@
 import { Service } from '@angular/core';
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // Define an interface to enforce type safety for the API response
@@ -32,5 +32,33 @@ export class DataFetcher {
   // Return an Observable of type User array
   getCookbook(): Observable<Cookbook> {
     return this.http.get<Cookbook>(this.apiUrl);
+  }
+
+  // this.articleService.createArticleWithResponse(payload).subscribe({
+  //     next: (response) => {
+  //       // Read the numeric status code (e.g., 201)
+  //       console.log('HTTP Status Code:', response.status); 
+        
+  //       // Read the status text status (e.g., "Created")
+  //       console.log('HTTP Status Text:', response.statusText); 
+        
+  //       // The actual body data is moved to the .body property
+  //       console.log('Response Body:', response.body); 
+  //     },
+  //     error: (error) => {
+  //       // Non-2xx codes fall into this block automatically
+  //       // You can still read the status of an error response
+  //       console.error('Error Status Code:', error.status);
+  //     }
+  //   });
+  saveRecipe(recipe: CookBookRecipe): Observable<HttpResponse<void>> {
+
+    const queryParams = new HttpParams()
+      .set('id', recipe.ID);
+
+    return this.http.put<void>(this.apiUrl, recipe.recipe, {
+      observe: 'response',
+      params: queryParams
+    });   
   }
 }
