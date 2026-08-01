@@ -1,6 +1,55 @@
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-<div class="TopLevel">
-    <input mat-dialog-title type="text" formControlName="RecipeName"/>
-    <input/>
-</div>
+  <div class="dialog-shell">
+    <div class="recipe-header">
+      <div class="recipe-title-block">
+        @if (isEditingName) {
+          <input
+            class="title-input"
+            type="text"
+            formControlName="RecipeName"
+            aria-label="Recipe name"
+          />
+        } @else {
+          <span class="recipe-name">{{ profileForm.get('RecipeName')?.value || 'Unnamed Recipe' }}</span>
+        }
+      </div>
+
+      <button class="header-button" type="button" (click)="toggleNameEdit()">
+        {{ isEditingName ? 'Done' : 'Edit' }}
+      </button>
+    </div>
+
+    <div class="new-item-row">
+      <input
+        class="new-item-input"
+        type="text"
+        [formControl]="newIngredient"
+        placeholder="Enter a new recipe item"
+        aria-label="Enter a new recipe item"
+      />
+      <button class="add-button" type="button" (click)="addIngredient()">Add Item</button>
+    </div>
+
+    <div class="items-panel">
+      <span class="items-label">Current Recipe Items</span>
+
+      @if (getIngredients().length === 0) {
+        <p class="empty-text">No items added yet.</p>
+      } @else {
+        <ul class="ingredient-list">
+          @for (ingredient of getIngredients(); track $index) {
+            <li class="ingredient-row">
+              <span class="ingredient-text">{{ ingredient }}</span>
+              <button class="delete-button" type="button" (click)="removeIngredient($index)">Delete</button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="dialog-actions">
+      <button class="secondary-button" type="button" (click)="onNoClick()">Cancel</button>
+      <button class="primary-button" type="submit">Save</button>
+    </div>
+  </div>
 </form>

@@ -1,6 +1,140 @@
-.TopLevel{
-    height: 100vh;
-    width: 100vh;
-    display: flex;
-    justify-content: center;
+:host {
+  display: block;
+}
+
+.dialog-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  min-width: 22rem;
+}
+
+.recipe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.recipe-title-block {
+  flex: 1;
+}
+
+.recipe-name,
+.title-input {
+  width: 100%;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.title-input,
+.new-item-input {
+  border: 1px solid #c6c6c6;
+  border-radius: 0.4rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.new-item-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.new-item-input {
+  flex: 1;
+}
+
+.items-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.items-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.empty-text {
+  margin: 0;
+  color: #666;
+}
+
+.ingredient-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ingredient-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #f4f4f4;
+}
+
+.ingredient-text {
+  flex: 1;
+}
+
+.delete-button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.ingredient-row:hover .delete-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.header-button,
+.add-button,
+.primary-button,
+.secondary-button,
+.delete-button {
+  cursor: pointer;
+}
+
+.header-button,
+.add-button,
+.primary-button,
+.secondary-button {
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.45rem 0.8rem;
+}
+
+.header-button,
+.add-button,
+.primary-button {
+  background: #2962ff;
+  color: white;
+}
+
+.secondary-button {
+  background: #ececec;
+  color: #1b1b1b;
+}
+
+.delete-button {
+  background: transparent;
+  border: 1px solid #d14545;
+  color: #d14545;
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.6rem;
 }
