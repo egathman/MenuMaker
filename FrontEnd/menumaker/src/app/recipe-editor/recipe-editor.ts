@@ -10,7 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CookBookRecipe } from '../services/data-fetcher/data-fetcher';
+import { DataFetcher, CookBookRecipe, Recipe } from '../services/data-fetcher/data-fetcher';
 
 @Component({
   selector: 'app-recipe-editor',
@@ -35,6 +35,8 @@ export class RecipeEditor implements OnInit {
   get ingredientsArray(): FormArray<FormControl<string>> {
     return this.profileForm.controls.Ingrediants as FormArray<FormControl<string>>;
   }
+
+  constructor (private dataServer: DataFetcher){}
 
   ngOnInit(): void {
     const recipe = this.data.recipe.recipe;
@@ -81,7 +83,20 @@ export class RecipeEditor implements OnInit {
 
   onSubmit(): void {
     if (this.profileForm.valid) {
-      this.dialogRef.close(this.profileForm.getRawValue());
+      var formData: Recipe = this.profileForm.getRawValue();
+      let CBRecipe: CookBookRecipe = {
+        ID: this.data.recipe.ID,
+        recipe: formData
+      };
+      this.dataServer.saveRecipe(CBRecipe).subscribe({
+        next: (response) => {
+          this.dialogRef.close();
+        },
+        error: (error) => {
+          // Non-2xx codes fall into this block automatically
+          // Make it obvious there is a form error
+        }
+      });
     }
   }
 }
