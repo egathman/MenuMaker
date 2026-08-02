@@ -90,15 +90,27 @@ export class RecipeEditor implements OnInit {
         ID: this.data.recipe.ID,
         recipe: formData
       };
-      this.dataServer.saveRecipe(CBRecipe).subscribe({
-        next: (response) => {
-          this.dialogRef.close();
-        },
-        error: (error) => {
-          // Non-2xx codes fall into this block automatically
-          // Make it obvious there is a form error
-        }
-      });
+      if (this.data.newRecipe) {
+        this.dataServer.addRecipe(CBRecipe).subscribe({
+          next: (response) => {
+            this.dialogRef.close(CBRecipe);
+          },
+          error: (error) => {
+            // Non-2xx codes fall into this block automatically
+            // Make it obvious there is a form error
+          }
+        })
+      } else {
+        this.dataServer.saveRecipe(CBRecipe).subscribe({
+          next: (response) => {
+            this.dialogRef.close(CBRecipe);
+          },
+          error: (error) => {
+            // Non-2xx codes fall into this block automatically
+            // Make it obvious there is a form error
+          }
+        });
+      }
     }
   }
 }

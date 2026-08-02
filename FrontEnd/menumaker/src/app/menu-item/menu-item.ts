@@ -1,4 +1,4 @@
-import { Component, input, inject } from '@angular/core';
+import { Component, input, inject, linkedSignal } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule} from '@angular/material/chips';
@@ -24,25 +24,28 @@ export class MenuItem {
     Day = input<string>('Sunday');
     EditMode = input<boolean>(false)
     Recipe = input<CookBookRecipe>()
+    DisplayRecipe = linkedSignal(() => this.Recipe());
     readonly dialog = inject(MatDialog)
 
     public getIngrediants() : Array<string>{
-      return this.Recipe()?.recipe.Ingrediants!
+      return this.DisplayRecipe()?.recipe.Ingrediants!
     }
 
     public getRecipeName() : string {
-      return this.Recipe()?.recipe.RecipeName!;
+      return this.DisplayRecipe()?.recipe.RecipeName!;
     }
 
     public openRecipeEditor() {
       const dialogRef = this.dialog.open(RecipeEditor, {
         data: {
-          recipe: this.Recipe(),
+          recipe: this.DisplayRecipe(),
           newRecipe: false
         },
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        let newRecipe: CookBookRecipe = result;
+        this.DisplayRecipe.set(newRecipe);
         console.log('The dialog was closed');
       });
     }

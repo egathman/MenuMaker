@@ -61,4 +61,10 @@ export class DataFetcher {
       params: queryParams
     });   
   }
+
+  addRecipe(recipe: CookBookRecipe): Observable<HttpResponse<void>> {
+    return this.http.post<void>(this.apiUrl, recipe.recipe, {
+      observe: 'response'
+    });
+  }
 }
