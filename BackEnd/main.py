@@ -21,7 +21,12 @@ def serve(path):
 
 @app.get('/api/menu')
 def get_menu():
-    return menuMgr.RetrieveMenu()
+    year = request.args.get('year')
+    week = request.args.get('week')
+    menu = menuMgr.RetrieveMenu(year, week)
+    if menu == "":
+        return menu, 400
+    return menu, 200
 
 # 2. Example Python API that your Angular app can call
 @app.get('/api/Recipes')

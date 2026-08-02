@@ -11,6 +11,59 @@ class DataBaseHelper:
         self.conn.close()
         pass
 
+    def RetrieveMenu(self, date) -> str:
+        menu = ""
+        self.conn = sqlite3.connect("SavedData.db")      
+        cursor = self.conn.cursor()
+        sql_update_query = """
+            SELECT menu 
+            FROM menu
+            WHERE date = ?
+        """
+        try:            
+            cursor.execute(sql_update_query, (date,))
+            rows = cursor.fetchall()
+
+            if rows:
+                # rows[0] is the first row tuple: (menu_string,)
+                # Extract index 0 from that tuple and convert it to a string safely
+                raw_menu = rows[0][0]
+                menu = str(raw_menu) if raw_menu is not None else ""
+                print(f"Successfully retrieved menu for date: {date}")            
+        except sqlite3.Error as error:
+            # Roll back changes if an error occurs
+            self.conn.rollback()
+            print(f"Failed to update table: {error}")
+        finally:
+            # 6. Always close the connection when finished
+            cursor.close()
+            self.conn.close()
+        return menu
+
+    def AddMenu(self, date, menu) -> bool:
+        success = False
+        self.conn = sqlite3.connect("SavedData.db")      
+        cursor = self.conn.cursor()
+        sql_update_query = """
+            INSERT INTO menu 
+            (date, menu)
+            VALUES (?, ?)
+        """
+        try:            
+            cursor.execute(sql_update_query, (date, menu))
+            self.conn.commit()
+            success = True
+            print(f"Successfully updated. Rows affected: {cursor.rowcount}")
+        except sqlite3.Error as error:
+            # Roll back changes if an error occurs
+            self.conn.rollback()
+            print(f"Failed to update table: {error}")
+        finally:
+            # 6. Always close the connection when finished
+            cursor.close()
+            self.conn.close()
+        return success
+
     def UpdateRecipeAtID(self, id, recipe) -> bool:
         success = False
         self.conn = sqlite3.connect("SavedData.db")      
