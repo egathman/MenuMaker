@@ -50,6 +50,28 @@ class DataBaseHelper:
         self.conn.commit()
         self.conn.close()
         return
-    
+
+    def DeleteRecipe(self, id):
+        success = False
+        self.conn = sqlite3.connect("SavedData.db")      
+        cursor = self.conn.cursor()
+        sql_update_query = """
+            DELETE FROM recipes 
+            WHERE id = ?
+        """
+        try:            
+            cursor.execute(sql_update_query, (id,))
+            self.conn.commit()
+            success = True
+            print(f"Successfully updated. Rows affected: {cursor.rowcount}")
+        except sqlite3.Error as error:
+            # Roll back changes if an error occurs
+            self.conn.rollback()
+            print(f"Failed to update table: {error}")
+        finally:
+            # 6. Always close the connection when finished
+            cursor.close()
+            self.conn.close()
+        return success
     
         

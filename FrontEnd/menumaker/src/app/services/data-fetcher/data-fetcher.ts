@@ -67,4 +67,13 @@ export class DataFetcher {
       observe: 'response'
     });
   }
+
+  deleteRecipe(id: number): Observable<HttpResponse<void>> {
+    const queryParams = new HttpParams()
+      .set('id', id);
+    return this.http.delete<void>(this.apiUrl, {
+      observe: 'response',
+      params: queryParams
+    })
+  }
 }

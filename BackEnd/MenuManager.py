@@ -68,4 +68,7 @@ class MenuManager:
             return True
         
         return False
+
+    def DeleteRecipe(self, id) -> bool:
+        return self.dataHelper.DeleteRecipe(id)
         

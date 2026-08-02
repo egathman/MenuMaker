@@ -29,7 +29,7 @@ def get_data():
     return menuMgr.RetrieveAllRecipes()
 
 @app.post('/api/Recipes')
-def get_recipes():
+def post_recipes():
     data = request.get_data(as_text=True)
     code = 400
     if menuMgr.SaveNewRecipe(data):
@@ -42,6 +42,14 @@ def edit_recipe():
     id = request.args.get('id')
     code = 400
     if id is not None and menuMgr.EditRecipe(id, data):
+        code = 200
+    return '', code
+
+@app.delete('/api/Recipes')
+def delete_recipe():
+    id = request.args.get('id')
+    code = 400
+    if id is not None and menuMgr.DeleteRecipe(id):
         code = 200
     return '', code
 

@@ -7,7 +7,7 @@
     <div class="horizontal-div">
         <div class="menu-items">
             @for (recipe of availableRecipes(); track $index) {
-                <menu-item class="menu-item" [EditMode]="true" [Recipe]="recipe"></menu-item>
+                <menu-item class="menu-item" (DeleteSignal)="handleDeleteEvent($event)" [EditMode]="true" [Recipe]="recipe"></menu-item>
             } @empty {
                 <p>Loading recipes...</p>
             }

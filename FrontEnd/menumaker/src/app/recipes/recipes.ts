@@ -27,7 +27,21 @@ export class Recipes implements OnInit {
 
   ngOnInit(): void {
     this.dataServer.getCookbook().subscribe((cookBook) =>{      
-      this.availableRecipes.set(cookBook.Recipes as CookBookRecipe[])
+      this.availableRecipes.set(cookBook.Recipes as CookBookRecipe[]);
+    });
+  }
+
+  handleDeleteEvent(id: number) {
+    this.dataServer.deleteRecipe(id).subscribe({
+      next: (response) => {
+        this.dataServer.getCookbook().subscribe((cookBook) => {
+          this.availableRecipes.set(cookBook.Recipes as CookBookRecipe[]);
+        })
+      },
+      error: (error) => {
+        // Non-2xx codes fall into this block automatically
+        // Make it obvious there is a form error
+      }
     });
   }
 

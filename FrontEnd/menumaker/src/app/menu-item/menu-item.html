@@ -18,7 +18,7 @@
   <mat-card-actions>
     @if(EditMode()) {
       <button matButton (click)="openRecipeEditor()">EDIT</button>
-      <button matButton>DELETE</button>
+      <button matButton (click)="deleteRecipe()">DELETE</button>
     } @else {
       <button matButton>SWAP DAYS</button>
       <button matButton>PICK NEW</button>

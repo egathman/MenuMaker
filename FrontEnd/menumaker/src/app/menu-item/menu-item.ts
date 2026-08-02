@@ -1,17 +1,9 @@
-import { Component, input, inject, linkedSignal } from '@angular/core';
+import { Component, input, inject, linkedSignal, Output, output } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule} from '@angular/material/chips';
-import { CookBookRecipe, Recipe } from '../services/data-fetcher/data-fetcher';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
+import { DataFetcher, CookBookRecipe } from '../services/data-fetcher/data-fetcher';
+import { MatDialog } from '@angular/material/dialog';
 import { RecipeEditor } from '../recipe-editor/recipe-editor';
 
 @Component({
@@ -22,10 +14,13 @@ import { RecipeEditor } from '../recipe-editor/recipe-editor';
 })
 export class MenuItem {
     Day = input<string>('Sunday');
-    EditMode = input<boolean>(false)
-    Recipe = input<CookBookRecipe>()
+    EditMode = input<boolean>(false);
+    Recipe = input<CookBookRecipe>();
     DisplayRecipe = linkedSignal(() => this.Recipe());
-    readonly dialog = inject(MatDialog)
+    DeleteSignal = output<number>();
+    readonly dialog = inject(MatDialog);
+
+    constructor(private dataServer: DataFetcher){}
 
     public getIngrediants() : Array<string>{
       return this.DisplayRecipe()?.recipe.Ingrediants!
@@ -48,5 +43,12 @@ export class MenuItem {
         this.DisplayRecipe.set(newRecipe);
         console.log('The dialog was closed');
       });
+    }
+
+    public deleteRecipe() {
+      let copyRecipe: CookBookRecipe | undefined = this.DisplayRecipe();
+      if (copyRecipe != undefined) {
+        this.DeleteSignal.emit(copyRecipe.ID)
+      }
     }
 }
